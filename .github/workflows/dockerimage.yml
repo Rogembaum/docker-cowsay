@@ -11,16 +11,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    steps  :
-    - uses : actions/checkout@v2
+    steps   :
+      
+      - name: Git clone repo
+        uses: actions/checkout@v1
     
-    - name : Build the Docker image
-      run  : docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
+      - name: Build the Docker image
+        run : docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
     
-    - name : View the Docker Images after build
-      run  : docker images
+      - name : View the Docker Images after build
+        run  : docker images
     
-    - name : Run the Docker container
-      run  : docker run my-image-name:${{ github.sha }}
-
-
+      - name : Run the Docker container and Remove after start
+        run  : docker run --rm my-image-name:${{ github.sha }}
+      
+      - name : Remove the Docker image
+        run  : docker rmi  my-image-name:${{ github.sha }}
