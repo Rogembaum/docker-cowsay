@@ -1,4 +1,6 @@
 name: Docker-Cowsay-CI
+env:
+  DEPLOY_PACKAGE_NAME: "cowsay-app-${{ github.sha }}.zip"
 
 on:
   push:
@@ -15,6 +17,9 @@ jobs:
       
       - name: Git clone repo
         uses: actions/checkout@v1
+      
+      - name: Create ZIP Deployment package for CD
+        run : zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./ -x *.git*
     
       - name: Build the Docker image
         run : docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
