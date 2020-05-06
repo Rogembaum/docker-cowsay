@@ -15,13 +15,12 @@ jobs:
     - uses : actions/checkout@v2
     
     - name : Build the Docker image
-      run  : docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run  : docker build . --file Dockerfile --tag my-image-name:${{ github.sha }}
     
     - name : View the Docker Images after build
       run  : docker images
     
     - name : Run the Docker container
-      run  : docker run my-image-name "Are you alive?" 
-      #run  : docker run debian echo "Are you alive?"
+      run  : docker run my-image-name:${{ github.sha }} "Are you alive?"
 
 
