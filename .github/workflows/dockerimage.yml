@@ -21,6 +21,6 @@ jobs:
       run  : docker images
     
     - name : Run the Docker container
-      run  : docker run my-image-name:${{ github.sha }} "Are you alive?"
+      run  : docker run my-image-name:${{ github.sha }}
 
 
